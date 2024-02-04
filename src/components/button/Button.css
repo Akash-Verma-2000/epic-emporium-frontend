@@ -1,0 +1,9 @@
+.quantity-btn {
+    border: none;
+    background-color: white;
+    font-size: x-large;
+}
+
+.quantity-btn:hover {
+    color: #565c64;
+}
