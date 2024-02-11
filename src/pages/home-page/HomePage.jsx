@@ -11,10 +11,14 @@ import ProductList from "../../components/product-List/ProductCard";
 import PageLoadingAnimation from "../../components/loading-animation/PageLoadingAnimation";
 
 export default function HomePage() {
-  const productArray = useSelector(productSelector);
+
+  
 
   const isProductFetched = useSelector(
     (state) => state.products.isProductFetched
+  );
+  const productArray = useSelector(
+    (state) => state.products.productsArray
   );
 
   const dispatch = useDispatch();

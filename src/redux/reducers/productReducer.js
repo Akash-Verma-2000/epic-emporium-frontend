@@ -55,7 +55,5 @@ const productSlice = createSlice({
 })
 
 export const { searchProducts } = productSlice.actions;
-export const productSelector = (state) => state.products.productsArray;
-
 
 export default productSlice.reducer

@@ -1,8 +1,8 @@
-export default function Message() {
+export default function Message({ text }) {
   return (
     <>
       <div className="alert alert-success my-3" role="alert">
-        A simple success alert—check it out!
+        {text}
       </div>
     </>
   );
