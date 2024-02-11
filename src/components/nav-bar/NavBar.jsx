@@ -51,16 +51,16 @@ export default function NavBar() {
                 <NavLink
                   className="nav-link active text-primary fs-5"
                   aria-current="page"
-                  to="/login"
+                  to="/customer/login"
                 >
-                  <Button text={"Login"} color={"primary"} />
+                  <Button text={"I'm a customer"} color={"primary"} />
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink
                   className="nav-link active text-primary fs-5"
                   aria-current="page"
-                  to="/register"
+                  to="/customer/register"
                 >
                   <Button text={"Logout"} color={"danger"} />
                 </NavLink>

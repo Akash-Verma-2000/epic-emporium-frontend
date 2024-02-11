@@ -4,7 +4,7 @@ export default function SearchButton() {
   return (
     <>
       <button
-        className="btn btn-primary position-fixed bottom-0 end-0 m-3"
+        className="btn btn-primary position-fixed bottom-0 end-0 m-3 z-3"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasTop"
@@ -12,6 +12,7 @@ export default function SearchButton() {
       >
         <i className="bi bi-search"></i>
       </button>
+     
       <SearchPage />
     </>
   );

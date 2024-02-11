@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import {
-  fetchProducts,
-  selectAllProducts,
+  getAllProducts,
+  productSelector,
 } from "../../redux/reducers/productReducer";
 
 import Banner from "../../images/Banner.jpg";
@@ -13,16 +11,21 @@ import ProductList from "../../components/product-List/ProductCard";
 import PageLoadingAnimation from "../../components/loading-animation/PageLoadingAnimation";
 
 export default function HomePage() {
-  const ProductArray = useSelector(selectAllProducts);
+  const productArray = useSelector(productSelector);
+
+  const isProductFetched = useSelector(
+    (state) => state.products.isProductFetched
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts()); // Dispatch the action to fetch products when component mounts
-  }, [dispatch]);
+    dispatch(getAllProducts());
+  }, []);
 
   return (
     <>
-      {ProductArray.length ? (
+      {isProductFetched ? (
         <>
           <img src={Banner} className="img-fluid" alt="" />
           <Carousel />
@@ -30,7 +33,7 @@ export default function HomePage() {
             <h2 className="text-primary mt-5">Find Everything We Offer</h2>
             <hr />
 
-            <ProductList ProductArray={ProductArray} />
+            <ProductList ProductArray={productArray} />
           </div>
         </>
       ) : (

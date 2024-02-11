@@ -1,6 +1,6 @@
-export default function Button({ text, color }) {
+export default function Button({ text, color, fn }) {
   return (
-    <button type="button" className={`btn btn-${color}`}>
+    <button className={`btn btn-${color}`} onClick={fn}>
       {text}
     </button>
   );

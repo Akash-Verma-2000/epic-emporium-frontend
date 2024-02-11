@@ -1,28 +1,16 @@
-import "./RegisterPage.css";
-import { Link } from "react-router-dom";
 import Button from "../../components/button/Button";
+import { Link } from "react-router-dom";
+import "./CustomerLoginPage.css";
 
-export default function RegisterPage() {
+export default function CustomerLoginPage() {
   return (
     <div className="login-page">
       <div className="container">
         <div className="row">
           <div className="col-md-5  form-section">
-            <form className="px-3 py-5 rounded-4 shadow">
-              <h2 className="text-light mb-5">Register Form </h2>
+            <form action="https://epic-emporium.onrender.com/api/user/signin" method="post" className="px-3 py-5 rounded-4 shadow">
+              <h2 className="text-light mb-5">Log-in Form </h2>
               <div className="mb-3">
-                <label
-                  htmlFor="exampleInputName"
-                  className="form-label text-light"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control mb-3"
-                  id="exampleInputName"
-                />
-
                 <label
                   htmlFor="exampleInputEmail1"
                   className="form-label text-light"
@@ -52,12 +40,10 @@ export default function RegisterPage() {
                   id="exampleInputPassword1"
                 />
               </div>
+             
+             <Link to={"/customer/register"} className="d-block mb-3 text-decoration-none">Are you not registered?</Link>
 
-              <Link to={"/login"} className="d-block mb-3 text-decoration-none">
-                Are you already registered?
-              </Link>
-
-              <Button color={"primary"} text={"Register"} />
+              <Button color={"primary"} text={"Login"}/>
             </form>
           </div>
         </div>

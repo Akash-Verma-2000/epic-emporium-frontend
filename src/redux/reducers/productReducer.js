@@ -1,46 +1,61 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-// Async thunk to fetch product data from the API
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async () => {
-    const response = await axios.get("https://epic-emporium.onrender.com/api/product/all");
-    return response.data; // Assuming API returns an array of products
-  }
-);
+export const getAllProducts = createAsyncThunk('products/fetchAllProducts', async () => {
 
-// Define initial state for the products slice
+  const res = await fetch("http://127.0.0.1:5100/api/product/all");
+  const data = await res.json();
+  return data.data;
+
+},)
+
 const initialState = {
-  products: [],
-  status: "idle", // "idle", "loading", "succeeded", or "failed"
-  error: null,
-};
+  productsArray: [],
+  searchResultArray: [],
+  isProductFetched: false,
+}
 
-// Create a slice for managing products state
-const productsSlice = createSlice({
-  name: "products",
+// Then, handle actions in your reducers:
+const productSlice = createSlice({
+  name: 'products',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.status = "loading"; // Set status to "loading" while fetching data
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.status = "succeeded"; // Set status to "succeeded" when data fetching is successful
-        state.products = action.payload; // Update products array with fetched data
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.status = "failed"; // Set status to "failed" if data fetching fails
-        state.error = action.error.message; // Store error message
-      });
+  reducers: {
+
+    searchProducts: (state, action) => {
+      let inputValue = action.payload.toUpperCase();
+      if (!inputValue) {
+        state.searchResultArray = [];
+      } else {
+
+        const temp = state.productsArray.filter((product) => {
+          let productName = product.title.toUpperCase();
+          return productName.indexOf(inputValue) == 0;
+        });
+        state.searchResultArray = temp;
+      }
+    },
   },
-});
 
-// Export reducer and action creators
-export const { } = productsSlice.actions;
-export default productsSlice.reducer;
+  extraReducers: (builder) => {
 
-// Selector function to access products array from the state
-export const selectAllProducts = (state) => state.products.products;
+    builder.addCase(getAllProducts.fulfilled, (state, action) => {
+      state.productsArray = action.payload;
+      state.isProductFetched = true;
+      // console.log("FULFILLED")
+    })
+      .addCase(getAllProducts.pending, (state, action) => {
+        state.isProductFetched = false;
+        // console.log("PENDING");
+      })
+      .addCase(getAllProducts.rejected, (state, action) => {
+        // console.log("Rejected");
+      })
+  },
+
+
+})
+
+export const { searchProducts } = productSlice.actions;
+export const productSelector = (state) => state.products.productsArray;
+
+
+export default productSlice.reducer

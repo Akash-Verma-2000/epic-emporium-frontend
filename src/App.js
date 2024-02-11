@@ -6,8 +6,8 @@ import { store } from "./redux/store/store";
 import NavBar from "./components/nav-bar/NavBar";
 import HomePage from "./pages/home-page/HomePage";
 import CartPage from "./pages/cart-page/CartPage";
-import LoginPage from "./pages/login-page/LoginPage";
-import RegisterPage from "./pages/register-page/RegisterPage";
+import CustomerLoginPage from "./pages/login-page/CustomerLoginPage";
+import CustomerRegisterPage from "./pages/register-page/CustomerRegisterPage";
 
 export default function App() {
 
@@ -28,13 +28,13 @@ export default function App() {
       },
 
       {
-        path: "/login",
-        element: <LoginPage />
+        path: "/customer/login",
+        element: <CustomerLoginPage />
       },
 
       {
-        path: "/register",
-        element: <RegisterPage />
+        path: "/customer/register",
+        element: <CustomerRegisterPage />
       }
 
 
@@ -47,7 +47,7 @@ export default function App() {
     <Provider store={store}>
 
       <RouterProvider router={browserRouter} />
-      
+
     </Provider>
   </>
 }
