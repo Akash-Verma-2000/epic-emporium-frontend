@@ -3,8 +3,9 @@ import "./CustomerRegisterPage.css";
 import { Link } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { customerSignup } from "../../redux/reducers/customerReducer";
-import Message from "../../components/message/Message";
 import { useDispatch, useSelector } from "react-redux";
+import LoadingButton from "../../components/button/LoadingButton";
+import MessageBar from "../../components/message-bar/MessageBar";
 
 export default function CustomerRegisterPage() {
   const [customerObj, setCustomerObj] = useState({
@@ -15,17 +16,20 @@ export default function CustomerRegisterPage() {
 
   const dispatch = useDispatch();
 
-  async function signupFormSubmitHandler(e) {
+  function signupFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(customerSignup(customerObj));
   }
 
   const message = useSelector((state) => state.customers.message);
+  const customerSignupPending = useSelector(
+    (state) => state.customers.customerSignupPending
+  );
 
   return (
     <div className="login-page">
       <div className="container">
-      {message ? <Message text={message.message} /> : null}
+        {message ? <MessageBar text={message.message} /> : null}
 
         <div className="row">
           <div className="col-md-5  form-section">
@@ -99,11 +103,15 @@ export default function CustomerRegisterPage() {
                 Are you already registered?
               </Link>
 
-              <Button
-                fn={signupFormSubmitHandler}
-                color={"primary"}
-                text={"Register"}
-              />
+              {!customerSignupPending ? (
+                <Button
+                  fn={signupFormSubmitHandler}
+                  color={"primary"}
+                  text={"Register"}
+                />
+              ) : (
+                <LoadingButton />
+              )}
             </form>
           </div>
         </div>

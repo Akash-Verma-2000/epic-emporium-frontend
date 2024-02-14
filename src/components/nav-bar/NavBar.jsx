@@ -3,12 +3,11 @@ import { Outlet, NavLink } from "react-router-dom";
 import LogoImage from "../../images/LogoImage.jpg";
 import Button from "../../components/button/Button";
 import "./NavBar.css";
-import SearchButton from "../button/SerachButton";
 
 export default function NavBar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-light">
+      <nav className="navbar navbar-expand-lg bg-light border-bottom border-primary border-2">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
             <img id="logo-img" src={LogoImage} />
@@ -34,6 +33,16 @@ export default function NavBar() {
                   to="/"
                 >
                   <i className="bi bi-house-door"></i> Home
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link active text-primary fs-5"
+                  aria-current="page"
+                  to="/shop"
+                >
+                  Shop
                 </NavLink>
               </li>
 
@@ -69,8 +78,6 @@ export default function NavBar() {
           </div>
         </div>
       </nav>
-
-      <SearchButton />
 
       <Outlet />
     </>

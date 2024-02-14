@@ -8,6 +8,8 @@ import HomePage from "./pages/home-page/HomePage";
 import CartPage from "./pages/cart-page/CartPage";
 import CustomerLoginPage from "./pages/login-page/CustomerLoginPage";
 import CustomerRegisterPage from "./pages/register-page/CustomerRegisterPage";
+import ShopPage from "./pages/shop-page/ShopPage";
+import ProductDetailsPage from "./pages/product-details-page/ProductDetailsPage";
 
 export default function App() {
 
@@ -20,6 +22,13 @@ export default function App() {
       children: [{
         path: "/",
         element: <HomePage />
+      }, {
+        path: "/shop",
+        element: <ShopPage />
+      },
+        , {
+        path: "/product-details/:_id",
+        element: <ProductDetailsPage />
       },
 
       {
