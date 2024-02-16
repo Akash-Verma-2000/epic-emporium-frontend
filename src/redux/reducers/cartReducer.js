@@ -16,6 +16,55 @@ export const addToCart = createAsyncThunk('cart/addToCartByID', async (productID
     return data;
 },)
 
+export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productID) => {
+
+    const res = await fetch(`http://127.0.0.1:5100/api/cart/delete/${productID}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem("token"),
+        },
+        body: JSON.stringify({}),
+    })
+
+    const data = await res.json();
+
+    return data;
+},)
+
+export const increaseQuantity = createAsyncThunk('cart/increaseQuantity', async (productID) => {
+
+    const res = await fetch(`http://127.0.0.1:5100/api/cart/increase/${productID}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem("token"),
+        },
+        body: JSON.stringify({}),
+    })
+
+    const data = await res.json();
+
+    return data;
+},)
+
+
+export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async (productID) => {
+
+    const res = await fetch(`http://127.0.0.1:5100/api/cart/decrease/${productID}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem("token"),
+        },
+        body: JSON.stringify({}),
+    })
+
+    const data = await res.json();
+
+    return data;
+},)
+
 export const getAllCartProduct = createAsyncThunk('cart/getCartProduct', async () => {
 
     const res = await fetch("http://127.0.0.1:5100/api/cart/all", {
@@ -26,6 +75,7 @@ export const getAllCartProduct = createAsyncThunk('cart/getCartProduct', async (
     });
 
     const data = await res.json();
+
 
     return data.data;
 
@@ -51,11 +101,11 @@ export const cartSlice = createSlice({
         builder
             //ADD TO CART
             .addCase(addToCart.fulfilled, (state, action) => {
-                state.addToCartPending = false;
+
                 console.log("FULFILLED")
             })
             .addCase(addToCart.pending, (state, action) => {
-                state.addToCartPending = true;
+
                 console.log("PENDING");
             })
             .addCase(addToCart.rejected, (state, action) => {
@@ -73,6 +123,40 @@ export const cartSlice = createSlice({
                 console.log("PENDING");
             })
             .addCase(getAllCartProduct.rejected, (state, action) => {
+                console.log("Rejected");
+            })
+            //REMOVE FROM CART
+            .addCase(removeFromCart.fulfilled, (state, action) => {
+                state.cartArray = action.payload;
+                console.log("FULFILLED")
+            })
+            .addCase(removeFromCart.pending, (state, action) => {
+                console.log("PENDING");
+            })
+            .addCase(removeFromCart.rejected, (state, action) => {
+                console.log("Rejected");
+            })
+            //INCREASE QUANTITY
+            .addCase(increaseQuantity.fulfilled, (state, action) => {
+                state.cartArray = action.payload;
+                console.log("FULFILLED")
+            })
+            .addCase(increaseQuantity.pending, (state, action) => {
+                console.log("PENDING");
+            })
+            .addCase(increaseQuantity.rejected, (state, action) => {
+                console.log("Rejected");
+            })
+
+            //DECREASE QUANTITY
+            .addCase(decreaseQuantity.fulfilled, (state, action) => {
+                state.cartArray = action.payload;
+                console.log("FULFILLED")
+            })
+            .addCase(decreaseQuantity.pending, (state, action) => {
+                console.log("PENDING");
+            })
+            .addCase(decreaseQuantity.rejected, (state, action) => {
                 console.log("Rejected");
             })
     },

@@ -1,17 +1,33 @@
 import "./ProductCard.css";
 import Button from "../button/Button";
 import { Link } from "react-router-dom";
-import { addToCart } from "../../redux/reducers/cartReducer";
+import {
+  addToCart,
+  getAllCartProduct,
+  removeFromCart,
+} from "../../redux/reducers/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingButton from "../button/LoadingButton";
+import { useState } from "react";
+import DecreaseButton from "../button/DecreaseButton";
+import IncreaseButton from "../button/IncreaseButton";
 // Functional component for rendering product cards
-export default function ProductCard({ product}) {
+export default function ProductCard({ product, cartArray }) {
   const dispatch = useDispatch();
+
   function addToCartButtonHandler() {
     dispatch(addToCart(product._id));
   }
 
-  const addToCartPending = useSelector((state) => state.cart.addToCartPending);
+  function removeFromCartButtonHandler() {
+    dispatch(removeFromCart(product._id));
+  }
+
+  let isCartProduct = false;
+
+  function isPresentInCart() {
+    isCartProduct = cartArray.find((p) => p._id == product._id);
+  }
+  isPresentInCart();
 
   return (
     <>
@@ -27,27 +43,28 @@ export default function ProductCard({ product}) {
           <div className="card-body">
             <p className="card-title">{product.title}</p>
 
+            {isCartProduct ? (
+              <div className="d-flex justify-content-around">
+                <DecreaseButton productID={product._id}/>
+                <p className="fs-5 fw-semibold mt-2">{product.quantity}</p>
+                <IncreaseButton productID={product._id} />
+              </div>
+            ) : null}
+
             <h4 className="card-text my-3">$ {product.price}</h4>
           </div>
 
-
-
-
-         
-
-
-
-
-
-
-
-          {addToCartPending ? (
-            <LoadingButton />
-          ) : (
+          {!isCartProduct ? (
             <Button
               text={"Add to cart"}
               color={"primary"}
               fn={addToCartButtonHandler}
+            />
+          ) : (
+            <Button
+              text={"Remove from cart"}
+              color={"danger"}
+              fn={removeFromCartButtonHandler}
             />
           )}
         </div>

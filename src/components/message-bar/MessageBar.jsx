@@ -1,7 +1,7 @@
 export default function MessageBar({ text }) {
   return (
     <>
-      <div className="alert alert-success my-3" role="alert">
+      <div className="alert alert-primary" role="alert">
         {text}
       </div>
     </>

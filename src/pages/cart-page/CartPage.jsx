@@ -6,7 +6,7 @@ import ProductList from "../../components/product-List/ProductList";
 export default function CartPage() {
   const dispatch = useDispatch();
 
-  const cartArray = useSelector((state) => state.cart.cartArray);
+  const cartArray = useSelector((state) => state.cart. cartArray);
 
   useEffect(() => {
     dispatch(getAllCartProduct());

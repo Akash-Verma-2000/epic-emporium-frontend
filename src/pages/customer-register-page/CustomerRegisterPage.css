@@ -1,5 +1,4 @@
 .login-page {
-
     background-image: url("../../images/Background.jpg");
     display: flex;
     align-items: center;
@@ -8,9 +7,6 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
-
-
-
 
 form {
     background-color: rgba(255, 255, 255, 0.1);

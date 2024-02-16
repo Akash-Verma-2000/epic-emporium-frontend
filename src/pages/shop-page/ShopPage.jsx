@@ -4,6 +4,7 @@ import { getAllProducts } from "../../redux/reducers/productReducer";
 import { useEffect } from "react";
 import PageLoadingAnimation from "../../components/loading-animation/PageLoadingAnimation";
 import SearchBar from "../../components/search-bar/SearchBar";
+import { getAllCartProduct } from "../../redux/reducers/cartReducer";
 
 export default function ShopPage() {
   const productsArrayPending = useSelector(

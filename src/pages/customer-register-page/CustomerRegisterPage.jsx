@@ -6,6 +6,7 @@ import { customerSignup } from "../../redux/reducers/customerReducer";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingButton from "../../components/button/LoadingButton";
 import MessageBar from "../../components/message-bar/MessageBar";
+import FormTabs from "../../components/form-tabs/FormTabs";
 
 export default function CustomerRegisterPage() {
   const [customerObj, setCustomerObj] = useState({
@@ -34,7 +35,8 @@ export default function CustomerRegisterPage() {
         <div className="row">
           <div className="col-md-5  form-section">
             <form className="px-3 py-5 rounded-4 shadow">
-              <h2 className="text-light mb-5">Sign-up Form </h2>
+              <FormTabs />
+              <h3 className="text-light text-center mb-3">Customer Register</h3>
               <div className="mb-3">
                 <label
                   htmlFor="exampleInputName"
@@ -84,7 +86,7 @@ export default function CustomerRegisterPage() {
                 <input
                   password=" password"
                   type="password"
-                  className="form-control"
+                  className="form-control mb-3"
                   id="exampleInputPassword1"
                   value={customerObj.password}
                   onChange={(e) => {
@@ -96,12 +98,7 @@ export default function CustomerRegisterPage() {
                 />
               </div>
 
-              <Link
-                to={"/customer/login"}
-                className="d-block mb-3 text-decoration-none"
-              >
-                Are you already registered?
-              </Link>
+            
 
               {!customerSignupPending ? (
                 <Button

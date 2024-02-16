@@ -6,9 +6,22 @@ import { useState } from "react";
 import { customerSignin } from "../../redux/reducers/customerReducer";
 import LoadingButton from "../../components/button/LoadingButton";
 import MessageBar from "../../components/message-bar/MessageBar";
+import FormTabs from "../../components/form-tabs/FormTabs";
 
 export default function CustomerLoginPage() {
   const [customerObj, setCustomerObj] = useState({ email: "", password: "" });
+  const [showVisibility, setshowVisibility] = useState(false);
+  const [passwordInputType, setPasswordInputType] = useState("password");
+
+  function showPassword() {
+    setshowVisibility(true);
+    setPasswordInputType("text");
+  }
+
+  function hidePassword() {
+    setshowVisibility(false);
+    setPasswordInputType("password");
+  }
 
   function signinFormSubmitHandler(e) {
     e.preventDefault();
@@ -34,8 +47,9 @@ export default function CustomerLoginPage() {
               method="post"
               className="px-3 py-5 rounded-4 shadow"
             >
-              <h2 className="text-light mb-5">Log-in Form </h2>
-              <div className="mb-3">
+              <FormTabs />
+              <h3 className="text-light text-center mb-3">Customer Login</h3>
+              <div className="my-3">
                 <label
                   htmlFor="exampleInputEmail1"
                   className="form-label text-light"
@@ -63,26 +77,42 @@ export default function CustomerLoginPage() {
                 >
                   Password
                 </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="exampleInputPassword1"
-                  value={customerObj.password}
-                  onChange={(e) => {
-                    setCustomerObj({
-                      ...customerObj,
-                      password: e.target.value,
-                    });
-                  }}
-                />
-              </div>
+                <div class="input-group mb-3">
+                  <input
+                    type={passwordInputType}
+                    id="new-password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    value={customerObj.password}
+                    onChange={(e) => {
+                      setCustomerObj({
+                        ...customerObj,
+                        password: e.target.value,
+                      });
+                    }}
+                  />
 
-              <Link
-                to={"/customer/register"}
-                className="d-block mb-3 text-decoration-none"
-              >
-                Are you not registered?
-              </Link>
+                  {showVisibility ? (
+                    <button
+                      class="btn bg-primary text-light"
+                      type="button"
+                      id="button-addon2"
+                      onClick={hidePassword}
+                    >
+                      <i class="bi bi-eye-slash"></i> Hide
+                    </button>
+                  ) : (
+                    <button
+                      class="btn bg-primary text-light"
+                      type="button"
+                      id="button-addon2"
+                      onClick={showPassword}
+                    >
+                      <i class="bi bi-eye"></i> Show
+                    </button>
+                  )}
+                </div>
+              </div>
 
               {customerSigninPending ? (
                 <LoadingButton />
