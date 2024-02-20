@@ -1,7 +1,7 @@
 import "./FormTabs.css";
 import { NavLink } from "react-router-dom";
 
-export default function FormTabs() {
+export default function FormTabs({link1, link2, link3}) {
   return (
     <>
       <ul className="nav nav-tabs border-primary mb-5">
@@ -18,7 +18,7 @@ export default function FormTabs() {
             }
             className="nav-link "
             aria-current="page"
-            to="/customer/login"
+            to={link1}
           >
             Login
           </NavLink>
@@ -35,7 +35,7 @@ export default function FormTabs() {
                 : undefined
             }
             className="nav-link"
-            to="/customer/register"
+            to={link2}
           >
             Register
           </NavLink>
@@ -52,7 +52,7 @@ export default function FormTabs() {
                 : undefined
             }
             className="nav-link"
-            to="/customer/forget-password"
+            to={link3}
           >
             Reset Password
           </NavLink>

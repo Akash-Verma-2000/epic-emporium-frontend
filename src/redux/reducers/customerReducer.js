@@ -25,7 +25,9 @@ export const customerSignin = createAsyncThunk('customer/signin', async (custome
     })
     const data = await res.json();
     const token = data.token;
-    localStorage.setItem("token", token);
+    if (token) {
+        localStorage.setItem("customerToken", token);
+    }
     return data.message;
 
 },)
@@ -74,15 +76,14 @@ export const resetPassword = createAsyncThunk('customer/reset-password', async (
 },)
 
 
-
-
 const initialState = {
     message: "",
     customerSigninPending: false,
     customerSignupPending: false,
     sendOTPPending: false,
     OTPVerificationPending: false,
-    passwordResetPending: false
+    passwordResetPending: false,
+    isCustomerLoggedIn: localStorage.getItem("customerToken")
 }
 
 // Then, handle actions in your reducers:
@@ -91,11 +92,20 @@ const customerSlice = createSlice({
     initialState,
     reducers: {
 
+        customerLogout: (state, action) => {
+            localStorage.removeItem("customerToken");
+            state.isCustomerLoggedIn = false;
+        },
+
+        resetCustomerNotification: (state, action) => {
+            state.message = "";
+        }
 
     },
 
     extraReducers: (builder) => {
 
+        //CUSTOMER REGISTER
         builder.addCase(customerSignup.fulfilled, (state, action) => {
             state.customerSignupPending = false;
             state.message = action.payload;
@@ -107,17 +117,22 @@ const customerSlice = createSlice({
             .addCase(customerSignup.rejected, (state, action) => {
                 state.message = action.payload;
             })
+
+            //CUSTOMER LOGIN
             .addCase(customerSignin.fulfilled, (state, action) => {
+                state.isCustomerLoggedIn = localStorage.getItem("customerToken");
                 state.message = action.payload;
                 state.customerSigninPending = false;
             })
             .addCase(customerSignin.pending, (state, action) => {
-                state.customerSigninPending = true;
                 state.message = action.payload;
+                state.customerSigninPending = true;
             })
             .addCase(customerSignin.rejected, (state, action) => {
                 state.message = action.payload;
             })
+
+            //SEND OTP
             .addCase(sendOTP.fulfilled, (state, action) => {
                 state.message = action.payload;
                 state.sendOTPPending = false;
@@ -129,6 +144,8 @@ const customerSlice = createSlice({
             .addCase(sendOTP.rejected, (state, action) => {
                 state.message = action.payload;
             })
+
+            //OTP VERIFICATION
             .addCase(verifyOTP.fulfilled, (state, action) => {
                 state.message = action.payload;
                 state.OTPVerificationPending = false;
@@ -140,6 +157,8 @@ const customerSlice = createSlice({
             .addCase(verifyOTP.rejected, (state, action) => {
                 state.message = action.payload;
             })
+
+            // RESET PASSWORD
             .addCase(resetPassword.fulfilled, (state, action) => {
                 state.message = action.payload;
                 state.passwordResetPending = false;
@@ -157,5 +176,6 @@ const customerSlice = createSlice({
 })
 
 
+export const { customerLogout, resetCustomerNotification } = customerSlice.actions;
 
 export default customerSlice.reducer

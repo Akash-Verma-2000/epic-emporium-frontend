@@ -17,14 +17,27 @@ export const getProductByID = createAsyncThunk('products/fetchProductByID', asyn
 
 },)
 
+export const getProductByCategory = createAsyncThunk('products/fetchProductByCategory', async (category) => {
+
+  const res = await fetch(`http://127.0.0.1:5100/api/product/category/${category}`);
+  const data = await res.json();
+  return data.data;
+
+},)
+
 const initialState = {
+
 
   singleProductDetails: {},
   singleProductDetailsPending: false,
-  productsArray: [],
   productsArrayPending: false,
+  specificCategoryArrayPending: false,
+  productsArray: [],
   filteredProductArray: [],
   searchResultArray: [],
+  specificCategoryArray: [],
+
+
 }
 
 // Then, handle actions in your reducers:
@@ -57,21 +70,21 @@ const productSlice = createSlice({
 
       let accessory = [];
       if (accCat) {
-        accessory = state.filteredProductArray.filter((product) => product.category == "accessory" && product.price <= maxPrice);
+        accessory = state.filteredProductArray.filter((product) => product.category == "accessories" && product.price <= maxPrice);
       }
 
       let others = [];
       if (othCat) {
-        others = state.filteredProductArray.filter((product) => product.category == "others" && product.price <= maxPrice);
+        others = state.filteredProductArray.filter((product) => product.category == "kids" && product.price <= maxPrice);
       }
 
       let man = [];
       if (menCat) {
-        man = state.filteredProductArray.filter((product) => product.category == "men's clothing" && product.price <= maxPrice);
+        man = state.filteredProductArray.filter((product) => product.category == "men" && product.price <= maxPrice);
       }
       let woman = [];
       if (womCat) {
-        woman = state.filteredProductArray.filter((product) => product.category == "women's clothing" && product.price <= maxPrice);
+        woman = state.filteredProductArray.filter((product) => product.category == "woman" && product.price <= maxPrice);
       }
       let jewellery = [];
       if (jelCat) {
@@ -122,11 +135,24 @@ const productSlice = createSlice({
       .addCase(getProductByID.rejected, (state, action) => {
         console.log("REJECTED");
       })
+      //GET PRODUCT BY CATEGORY
+      .addCase(getProductByCategory.fulfilled, (state, action) => {
+        state.specificCategoryArray = action.payload;
+        state.specificCategoryArrayPending = false;
+        console.log("FULFILLED");
+      })
+      .addCase(getProductByCategory.pending, (state, action) => {
+        state.specificCategoryArrayPending = true;
+        console.log("PENDING")
+      })
+      .addCase(getProductByCategory.rejected, (state, action) => {
+        console.log("REJECTED")
+      })
   },
 
 
 })
 
-export const { searchProducts, filterByCategory } = productSlice.actions;
+export const { searchProducts, filterByCategory, specificCategoryArray, specificCategoryArrayPending } = productSlice.actions;
 
-export default productSlice.reducer
+export default productSlice.reducer;

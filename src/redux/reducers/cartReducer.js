@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-
 export const addToCart = createAsyncThunk('cart/addToCartByID', async (productID) => {
 
     const res = await fetch(`http://127.0.0.1:5100/api/cart/add/${productID}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("token"),
+            'Authorization': localStorage.getItem("customerToken"),
         },
         body: JSON.stringify({}),
     })
@@ -22,7 +21,7 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (pro
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("token"),
+            'Authorization': localStorage.getItem("customerToken"),
         },
         body: JSON.stringify({}),
     })
@@ -38,16 +37,14 @@ export const increaseQuantity = createAsyncThunk('cart/increaseQuantity', async 
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("token"),
+            'Authorization': localStorage.getItem("customerToken"),
         },
         body: JSON.stringify({}),
     })
 
     const data = await res.json();
-
-    return data;
+    return data.data;
 },)
-
 
 export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async (productID) => {
 
@@ -55,7 +52,7 @@ export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async 
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("token"),
+            'Authorization': localStorage.getItem("customerToken"),
         },
         body: JSON.stringify({}),
     })
@@ -70,25 +67,21 @@ export const getAllCartProduct = createAsyncThunk('cart/getCartProduct', async (
     const res = await fetch("http://127.0.0.1:5100/api/cart/all", {
         method: 'GET',
         headers: {
-            'Authorization': localStorage.getItem("token"),
+            'Authorization': localStorage.getItem("customerToken"),
         }
     });
 
     const data = await res.json();
 
-
     return data.data;
 
-
 },)
-
 
 const initialState = {
 
     cartArray: [],
     addToCartPending: false,
     getAllCartProductPending: false,
-
 }
 
 export const cartSlice = createSlice({
@@ -96,16 +89,18 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
 
+        resetNotification: (state, action) => {
+            state.message = "";
+        }
+
     }, extraReducers: (builder) => {
 
         builder
             //ADD TO CART
             .addCase(addToCart.fulfilled, (state, action) => {
-
                 console.log("FULFILLED")
             })
             .addCase(addToCart.pending, (state, action) => {
-
                 console.log("PENDING");
             })
             .addCase(addToCart.rejected, (state, action) => {

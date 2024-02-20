@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./CustomerRegisterPage.css";
-import { Link } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { customerSignup } from "../../redux/reducers/customerReducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +8,8 @@ import MessageBar from "../../components/message-bar/MessageBar";
 import FormTabs from "../../components/form-tabs/FormTabs";
 
 export default function CustomerRegisterPage() {
+  const [showVisibility, setshowVisibility] = useState(false);
+  const [passwordInputType, setPasswordInputType] = useState("password");
   const [customerObj, setCustomerObj] = useState({
     name: "",
     email: "",
@@ -16,6 +17,16 @@ export default function CustomerRegisterPage() {
   });
 
   const dispatch = useDispatch();
+
+  function showPassword() {
+    setshowVisibility(true);
+    setPasswordInputType("text");
+  }
+
+  function hidePassword() {
+    setshowVisibility(false);
+    setPasswordInputType("password");
+  }
 
   function signupFormSubmitHandler(e) {
     e.preventDefault();
@@ -34,8 +45,12 @@ export default function CustomerRegisterPage() {
 
         <div className="row">
           <div className="col-md-5  form-section">
-            <form className="px-3 py-5 rounded-4 shadow">
-              <FormTabs />
+            <form className="px-3 py-5 rounded-4 shadow"  onSubmit={signupFormSubmitHandler}>
+              <FormTabs
+                link1={"/customer/login"}
+                link2={"/customer/register"}
+                link3={"/customer/forget-password"}
+              />
               <h3 className="text-light text-center mb-3">Customer Register</h3>
               <div className="mb-3">
                 <label
@@ -53,6 +68,7 @@ export default function CustomerRegisterPage() {
                   onChange={(e) => {
                     setCustomerObj({ ...customerObj, name: e.target.value });
                   }}
+                  required
                 />
 
                 <label
@@ -71,38 +87,54 @@ export default function CustomerRegisterPage() {
                   onChange={(e) => {
                     setCustomerObj({ ...customerObj, email: e.target.value });
                   }}
+                  required
                 />
                 <div id="emailHelp" className="form-text text-light">
                   We'll never share your email with anyone else.
                 </div>
               </div>
-              <div>
-                <label
-                  htmlFor="exampleInputPassword1"
-                  className="form-label text-light"
-                >
-                  Password
-                </label>
+              <label htmlFor="new-password" className="form-label text-light">
+                Password
+              </label>
+              <div className="input-group mb-3">
                 <input
-                  password=" password"
-                  type="password"
-                  className="form-control mb-3"
-                  id="exampleInputPassword1"
-                  value={customerObj.password}
+                  type={passwordInputType}
+                  id="new-password"
+                  className="form-control"
+                  placeholder="Enter new password"
                   onChange={(e) => {
                     setCustomerObj({
                       ...customerObj,
                       password: e.target.value,
                     });
                   }}
+                  required
                 />
-              </div>
 
-            
+                {showVisibility ? (
+                  <button
+                    className="btn bg-primary text-light"
+                    type="button"
+                    id="button-addon2"
+                    onClick={hidePassword}
+                  >
+                    <i className="bi bi-eye-slash"></i> Hide
+                  </button>
+                ) : (
+                  <button
+                    className="btn bg-primary text-light"
+                    type="button"
+                    id="button-addon2"
+                    onClick={showPassword}
+                  >
+                    <i className="bi bi-eye"></i> Show
+                  </button>
+                )}
+              </div>
 
               {!customerSignupPending ? (
                 <Button
-                  fn={signupFormSubmitHandler}
+                 
                   color={"primary"}
                   text={"Register"}
                 />

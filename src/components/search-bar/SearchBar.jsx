@@ -64,7 +64,7 @@ export default function SearchBar() {
               }}
             />
             <label className="form-check-label ms-2" htmlFor="exampleCheck1">
-              Men's Clothings
+              Men
             </label>
           </li>
           <li>
@@ -76,7 +76,7 @@ export default function SearchBar() {
               }}
             />
             <label className="form-check-label ms-2" htmlFor="exampleCheck1">
-              Women's Clothings
+              Women
             </label>
           </li>
           <li>
@@ -100,7 +100,7 @@ export default function SearchBar() {
               }}
             />
             <label className="form-check-label ms-2" htmlFor="exampleCheck1">
-              Electronic
+              Electronics
             </label>
           </li>
           <li>
@@ -112,7 +112,7 @@ export default function SearchBar() {
               }}
             />
             <label className="form-check-label ms-2" htmlFor="exampleCheck1">
-              Accessory
+              Accessories
             </label>
           </li>
           <li>
@@ -124,7 +124,7 @@ export default function SearchBar() {
               }}
             />
             <label className="form-check-label ms-2" htmlFor="exampleCheck1">
-              Others
+              Kids
             </label>
           </li>
           <li>

@@ -4,9 +4,13 @@ import { getAllProducts } from "../../redux/reducers/productReducer";
 import { useEffect } from "react";
 import PageLoadingAnimation from "../../components/loading-animation/PageLoadingAnimation";
 import SearchBar from "../../components/search-bar/SearchBar";
+import "./ShopPage.css";
+import { useNavigate } from "react-router-dom";
 import { getAllCartProduct } from "../../redux/reducers/cartReducer";
 
 export default function ShopPage() {
+  
+
   const productsArrayPending = useSelector(
     (state) => state.products.productsArrayPending
   );
@@ -17,13 +21,15 @@ export default function ShopPage() {
 
   const dispatch = useDispatch();
 
+  
+  dispatch(getAllCartProduct());
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
 
   return (
     <>
-      <div className="container">
+      <div className="container shop-page">
         <SearchBar />
 
         <h2 className="text-primary text-center">Explore Our Full Range</h2>

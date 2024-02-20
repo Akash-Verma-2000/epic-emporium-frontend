@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import "./Button.css";
 import { decreaseQuantity } from "../../redux/reducers/cartReducer";
 
-export default function DecreaseButton({productID}) {
+export default function DecreaseButton({ productID }) {
   const dispatch = useDispatch();
 
   return (
@@ -11,6 +11,7 @@ export default function DecreaseButton({productID}) {
         className="quantity-btn"
         onClick={(e) => {
           e.preventDefault();
+          console.log("DECREAMENT CALLED");
           dispatch(decreaseQuantity(productID));
         }}
       >

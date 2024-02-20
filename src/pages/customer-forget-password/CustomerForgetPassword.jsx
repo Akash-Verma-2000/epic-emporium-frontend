@@ -53,13 +53,17 @@ export default function CustomerForgetPassword() {
           <div className="row">
             <div className="col-md-5  form-section">
               <form className="px-3 py-5 rounded-4 shadow">
-              <FormTabs />
+                <FormTabs
+                  link1={"/customer/login"}
+                  link2={"/customer/register"}
+                  link3={"/customer/forget-password"}
+                />
                 <h3 className="text-light text-center mb-3">Reset Password</h3>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label text-light">
                     Email address
                   </label>
-                  <div className="input-group mb-3">
+                  <div className="input-group">
                     <input
                       type="email"
                       id="email"
@@ -86,7 +90,9 @@ export default function CustomerForgetPassword() {
                       <LoadingButton />
                     )}
                   </div>
-
+                  <div id="emailHelp" className="form-text text-light">
+                    We'll never share your email with anyone else.
+                  </div>
                   <label htmlFor="otp" className="form-label text-light mt-3">
                     OTP
                   </label>
@@ -120,7 +126,7 @@ export default function CustomerForgetPassword() {
 
                   <label
                     htmlFor="new-password"
-                    className="form-label text-light mt-3"
+                    className="form-label text-light "
                   >
                     New Password
                   </label>

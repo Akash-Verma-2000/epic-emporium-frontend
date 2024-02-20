@@ -1,8 +1,8 @@
 import Button from "../../components/button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CustomerLoginPage.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { customerSignin } from "../../redux/reducers/customerReducer";
 import LoadingButton from "../../components/button/LoadingButton";
 import MessageBar from "../../components/message-bar/MessageBar";
@@ -12,7 +12,15 @@ export default function CustomerLoginPage() {
   const [customerObj, setCustomerObj] = useState({ email: "", password: "" });
   const [showVisibility, setshowVisibility] = useState(false);
   const [passwordInputType, setPasswordInputType] = useState("password");
-
+  const dispatch = useDispatch();
+  const message = useSelector((state) => state.customers.message);
+  const customerSigninPending = useSelector(
+    (state) => state.customers.customerSigninPending
+  );
+  const isCustomerLoggedIn = useSelector(
+    (state) => state.customers.isCustomerLoggedIn
+  );
+  const navigate = useNavigate();
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
@@ -28,12 +36,12 @@ export default function CustomerLoginPage() {
     dispatch(customerSignin(customerObj));
   }
 
-  const dispatch = useDispatch();
-
-  const message = useSelector((state) => state.customers.message);
-  const customerSigninPending = useSelector(
-    (state) => state.customers.customerSigninPending
-  );
+  
+  useEffect(() => {
+    if (isCustomerLoggedIn) {
+      navigate("/");
+    }
+  }, [isCustomerLoggedIn]);
 
   return (
     <div className="login-page">
@@ -42,12 +50,12 @@ export default function CustomerLoginPage() {
 
         <div className="row">
           <div className="col-md-5  form-section">
-            <form
-              action="https://epic-emporium.onrender.com/api/user/signin"
-              method="post"
-              className="px-3 py-5 rounded-4 shadow"
-            >
-              <FormTabs />
+            <form className="px-3 py-5 rounded-4 shadow">
+              <FormTabs
+                link1={"/customer/login"}
+                link2={"/customer/register"}
+                link3={"/customer/forget-password"}
+              />
               <h3 className="text-light text-center mb-3">Customer Login</h3>
               <div className="my-3">
                 <label
