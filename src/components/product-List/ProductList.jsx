@@ -16,7 +16,7 @@ export default function ProductList({ ProductArray ,isCartPage=false}) {
     <div className="row">
       {message ? <MessageBar text={message} /> : null}
 
-      {ProductArray.map((product, index) => {
+      {ProductArray?.map((product, index) => {
         return (
           <ProductCard key={index} product={product} cartArray={cartArray}  isCartPage={isCartPage}/>
         );
