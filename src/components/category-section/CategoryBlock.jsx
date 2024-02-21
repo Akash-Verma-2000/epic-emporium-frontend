@@ -1,3 +1,4 @@
+// Import necessary modules and images
 import "./CategoryBlock.css";
 import menCatImg from "../../images/menCatImg.jpg";
 import menCatImgFade from "../../images/menCatImgFade.jpg";
@@ -14,6 +15,7 @@ import kidCatImgFade from "../../images/kidCatImgFade.jpg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Component for displaying category block
 export default function CategoryBlock() {
   const [menImg, setMenImg] = useState(false);
   const [womImg, setWomImg] = useState(false);
@@ -33,10 +35,10 @@ export default function CategoryBlock() {
           <div
             className="col-4"
             onMouseEnter={() => {
-              setMenImg((prev) => true);
+              setMenImg(true);
             }}
             onMouseLeave={() => {
-              setMenImg((prev) => false);
+              setMenImg(false);
             }}
           >
             <Link to={"/category/men"}>
@@ -59,10 +61,10 @@ export default function CategoryBlock() {
           <div
             className="col-4"
             onMouseEnter={() => {
-              setWomImg((prev) => true);
+              setWomImg(true);
             }}
             onMouseLeave={() => {
-              setWomImg((prev) => false);
+              setWomImg(false);
             }}
           >
             <Link to={"/category/woman"}>
@@ -84,10 +86,10 @@ export default function CategoryBlock() {
           <div
             className="col-4"
             onMouseEnter={() => {
-              setKidImg((prev) => true);
+              setKidImg(true);
             }}
             onMouseLeave={() => {
-              setKidImg((prev) => false);
+              setKidImg(false);
             }}
           >
             <Link to={"/category/kids"}>
@@ -111,10 +113,10 @@ export default function CategoryBlock() {
           <div
             className="col-4"
             onMouseEnter={() => {
-              setAccImg((prev) => true);
+              setAccImg(true);
             }}
             onMouseLeave={() => {
-              setAccImg((prev) => false);
+              setAccImg(false);
             }}
           >
             <Link to={"/category/accessories"}>
@@ -136,10 +138,10 @@ export default function CategoryBlock() {
           <div
             className="col-4"
             onMouseEnter={() => {
-              setEleImg((prev) => true);
+              setEleImg(true);
             }}
             onMouseLeave={() => {
-              setEleImg((prev) => false);
+              setEleImg(false);
             }}
           >
             <Link to={"/category/electronics"}>
@@ -161,10 +163,10 @@ export default function CategoryBlock() {
           <div
             className="col-4"
             onMouseEnter={() => {
-              setJelImg((prev) => true);
+              setJelImg(true);
             }}
             onMouseLeave={() => {
-              setJelImg((prev) => false);
+              setJelImg(false);
             }}
           >
             <Link to={"/category/jewelery"}>

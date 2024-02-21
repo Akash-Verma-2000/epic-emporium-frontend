@@ -1,30 +1,38 @@
+// Import necessary modules and components
 import { Link, useParams } from "react-router-dom";
 import { getProductByID } from "../../redux/reducers/productReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PageLoadingAnimation from "../../components/loading-animation/PageLoadingAnimation";
 import Button from "../../components/button/Button";
-import "./ProductDetailsPage.css"
+import "./ProductDetailsPage.css";
 
+// Component for product details page
 export default function ProductDetailsPage() {
-  const { _id } = useParams();
-  const dispatch = useDispatch();
+  const { _id } = useParams(); // Get the ID parameter from the URL
+  const dispatch = useDispatch(); // useDispatch hook for dispatching actions
 
+  // Side effect to fetch product details by ID on component mount
   useEffect(() => {
     dispatch(getProductByID(_id));
   }, []);
 
+  // Selector for single product details
   const singleProductDetails = useSelector(
     (state) => state.products.singleProductDetails
   );
+
+  // Selector for checking if single product details are pending
   const singleProductDetailsPending = useSelector(
     (state) => state.products.singleProductDetailsPending
   );
 
+  // Selector for checking if customer is logged in
   const isCustomerLoggedIn = useSelector(
     (state) => state.customers.isCustomerLoggedIn
   );
 
+  // Selector for checking if vendor is logged in
   const isVendorLoggedIn = useSelector(
     (state) => state.vendors.isVendorLoggedIn
   );

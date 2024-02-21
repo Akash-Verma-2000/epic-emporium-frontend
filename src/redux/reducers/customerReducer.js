@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+// Async action creator for customer signup
 export const customerSignup = createAsyncThunk('customer/signup', async (customerObj) => {
 
-    const res = await fetch("http://127.0.0.1:5100/api/customer/signup", {
+    // Making a POST request to the server to register a customer
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/customer/signup", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -11,12 +13,13 @@ export const customerSignup = createAsyncThunk('customer/signup', async (custome
     })
     const data = await res.json();
     return data;
-
 },)
 
+// Async action creator for customer signin
 export const customerSignin = createAsyncThunk('customer/signin', async (customerObj) => {
 
-    const res = await fetch("http://127.0.0.1:5100/api/customer/signin", {
+    // Making a POST request to the server to authenticate a customer
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/customer/signin", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -29,78 +32,83 @@ export const customerSignin = createAsyncThunk('customer/signin', async (custome
         localStorage.setItem("customerToken", token);
     }
     return data.message;
-
 },)
 
+// Async action creator for sending OTP to the customer
 export const sendOTP = createAsyncThunk('customer/sendOTP', async (customerObj) => {
 
-    const res = await fetch("http://127.0.0.1:5100/api/customer/sendOTP", {
+    // Making a POST request to the server to send OTP
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/customer/sendOTP", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(customerObj)
     })
-
     const data = await res.json();
     return data.message;
 },)
 
+// Async action creator for verifying OTP provided by the customer
 export const verifyOTP = createAsyncThunk('customer/verifyOTP', async (customerObj) => {
 
-    const res = await fetch("http://127.0.0.1:5100/api/customer/verifyOTP", {
+    // Making a POST request to the server to verify OTP
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/customer/verifyOTP", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(customerObj)
     })
-
     const data = await res.json();
     return data.message;
 },)
 
-
+// Async action creator for resetting customer password
 export const resetPassword = createAsyncThunk('customer/reset-password', async (customerObj) => {
 
-    const res = await fetch("http://127.0.0.1:5100/api/customer/reset-password", {
+    // Making a POST request to the server to reset password
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/customer/reset-password", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(customerObj)
     })
-
     const data = await res.json();
     return data.message;
 },)
 
 
+// Initial state for the customer slice of the Redux store
 const initialState = {
-    message: "",
-    customerSigninPending: false,
-    customerSignupPending: false,
-    sendOTPPending: false,
-    OTPVerificationPending: false,
-    passwordResetPending: false,
-    isCustomerLoggedIn: localStorage.getItem("customerToken")
+
+    message: "", // Notification message
+    customerSigninPending: false, // Flag indicating if customer signin is pending
+    customerSignupPending: false,  // Flag indicating if customer signup is pending
+    sendOTPPending: false,  // Flag indicating if sending OTP is pending
+    OTPVerificationPending: false, // Flag indicating if OTP verification is pending
+    passwordResetPending: false, // Flag indicating if password reset is pending
+    isCustomerLoggedIn: localStorage.getItem("customerToken") // Flag indicating if customer is logged in
 }
 
-// Then, handle actions in your reducers:
+// Creating a slice of the Redux store for managing the customer state
 const customerSlice = createSlice({
-    name: 'customers',
-    initialState,
+    name: 'customers',  // Slice name
+    initialState, // Initial state
+
     reducers: {
 
+        // Action for customer logout
         customerLogout: (state, action) => {
             localStorage.removeItem("customerToken");
             state.isCustomerLoggedIn = false;
         },
 
+        // Action for resetting customer notification
         resetCustomerNotification: (state, action) => {
             state.message = "";
         }
-
     },
 
     extraReducers: (builder) => {
@@ -174,7 +182,6 @@ const customerSlice = createSlice({
 
 
 })
-
 
 export const { customerLogout, resetCustomerNotification } = customerSlice.actions;
 

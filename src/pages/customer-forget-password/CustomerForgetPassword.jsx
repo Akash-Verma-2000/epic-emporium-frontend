@@ -1,4 +1,4 @@
-import "./CustomerForgetPassword.css";
+// Importing necessary styles and dependencies
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +12,7 @@ import LoadingButton from "../../components/button/LoadingButton";
 import FormTabs from "../../components/form-tabs/FormTabs";
 
 export default function CustomerForgetPassword() {
+  // State variables using useState hook
   const [showVisibility, setshowVisibility] = useState(false);
   const [passwordInputType, setPasswordInputType] = useState("password");
   const [email, setEmail] = useState("");
@@ -19,23 +20,29 @@ export default function CustomerForgetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const dispatch = useDispatch();
 
+  // Function to show password visibility
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
   }
 
+  // Function to hide password visibility
   function hidePassword() {
     setshowVisibility(false);
     setPasswordInputType("password");
   }
 
+  // Function to handle form submission for resetting password
   function resetPasswordFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(resetPassword({ newPassword }));
   }
 
+  // Selecting relevant states from Redux store using useSelector hook
   const message = useSelector((state) => state.customers.message);
+
   const sendOTPPending = useSelector((state) => state.customers.sendOTPPending);
+
   const OTPVerificationPending = useSelector(
     (state) => state.customers.OTPVerificationPending
   );
@@ -48,6 +55,8 @@ export default function CustomerForgetPassword() {
     <>
       <div className="login-page">
         <div className="container">
+
+          {/* Displaying message bar if message exists */}
           {message ? <MessageBar text={message} /> : null}
 
           <div className="row">

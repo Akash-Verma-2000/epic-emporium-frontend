@@ -14,7 +14,6 @@ export default function IncreaseButton({productID}) {
         className="quantity-btn"
         onClick={(e) => {
           e.preventDefault();
-          console.log("INCREAMENT CALLED")
           dispatch(increaseQuantity(productID));
         }}
       >

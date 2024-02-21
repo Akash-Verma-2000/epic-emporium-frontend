@@ -1,20 +1,35 @@
+// Importing necessary components from react-router-dom library
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
+
+// Importing LogoImage
 import LogoImage from "../../images/LogoImage.jpg";
+
+// Importing Button component
 import Button from "../../components/button/Button";
+
+// Importing CSS styles for NavBar
 import "./NavBar.css";
+
+// Importing useDispatch and useSelector hooks from react-redux library
 import { useDispatch, useSelector } from "react-redux";
+
+// Importing customerLogout action creator
 import { customerLogout } from "../../redux/reducers/customerReducer";
+
+// Importing vendorLogout action creator
 import { vendorLogout } from "../../redux/reducers/vendorReducer";
 
 export default function NavBar() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initializing dispatch function
+  const navigate = useNavigate(); // Initializing navigate function from useNavigate hook
 
+  // Function to handle customer logout
   function customerLogoutHandler() {
     dispatch(customerLogout());
     navigate("/");
   }
 
+  // Function to handle vendor logout
   function vendorLogoutHandler() {
     dispatch(vendorLogout());
     navigate("/");
@@ -26,7 +41,7 @@ export default function NavBar() {
   const isVendorLoggedIn = useSelector(
     (state) => state.vendors.isVendorLoggedIn
   );
-  const cartArray=useSelector((state)=>state.cart.cartArray);
+  const cartArray = useSelector((state) => state.cart.cartArray);
 
   return (
     <>
@@ -80,8 +95,7 @@ export default function NavBar() {
                     aria-current="page"
                     to="/cart"
                   >
-                    Cart 
-                    ({cartArray?.length})
+                    Cart ({cartArray?.length})
                   </NavLink>
                 </li>
               ) : null}

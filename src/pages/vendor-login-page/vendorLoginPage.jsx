@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import Button from "../../components/button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -7,35 +8,48 @@ import FormTabs from "../../components/form-tabs/FormTabs";
 import { vendorSignin } from "../../redux/reducers/vendorReducer";
 import { useNavigate } from "react-router-dom";
 
+// Component for vendor login page
 export default function VendorLoginPage() {
-  const [vendorObj, setVendorObj] = useState({ email: "", password: "" });
-  const [showVisibility, setshowVisibility] = useState(false);
-  const [passwordInputType, setPasswordInputType] = useState("password");
-  const dispatch = useDispatch();
-  const message = useSelector((state) => state.vendors.message);
+  // Component state variables
+  const [vendorObj, setVendorObj] = useState({ email: "", password: "" }); // State variable for vendor email and password
+  const [showVisibility, setshowVisibility] = useState(false); // State variable for showing password visibility
+  const [passwordInputType, setPasswordInputType] = useState("password"); // State variable for password input type
+
+  const dispatch = useDispatch(); // useDispatch hook for dispatching actions
+  const message = useSelector((state) => state.vendors.message); // Selector for message from the redux store
+
+  // Selector for checking if vendor is logged in
   const isVendorLoggedIn = useSelector(
     (state) => state.vendors.isVendorLoggedIn
   );
+
+  // Selector for checking if vendor signin is pending
   const vendorSigninPending = useSelector(
     (state) => state.vendors.vendorSigninPending
   );
+
+  // React Router hook for navigation
   const navigate = useNavigate();
 
+  // Function to show password
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
   }
 
+  // Function to hide password
   function hidePassword() {
     setshowVisibility(false);
     setPasswordInputType("password");
   }
 
+  // Function to handle vendor login form submission
   function signinFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(vendorSignin(vendorObj));
   }
 
+  // Effect hook to redirect to vendor dashboard if vendor is logged in
   useEffect(() => {
     if (isVendorLoggedIn) {
       console.log("IS VENDOR LOGGED IN IF BLOCK =>", isVendorLoggedIn);

@@ -1,6 +1,6 @@
+// Import necessary modules and components
 import Button from "../../components/button/Button";
-import { Link, useNavigate } from "react-router-dom";
-import "./CustomerLoginPage.css";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { customerSignin } from "../../redux/reducers/customerReducer";
@@ -9,9 +9,12 @@ import MessageBar from "../../components/message-bar/MessageBar";
 import FormTabs from "../../components/form-tabs/FormTabs";
 
 export default function CustomerLoginPage() {
+  // State variables using useState hook
   const [customerObj, setCustomerObj] = useState({ email: "", password: "" });
   const [showVisibility, setshowVisibility] = useState(false);
   const [passwordInputType, setPasswordInputType] = useState("password");
+
+  // Redux hooks and state variables
   const dispatch = useDispatch();
   const message = useSelector((state) => state.customers.message);
   const customerSigninPending = useSelector(
@@ -21,22 +24,26 @@ export default function CustomerLoginPage() {
     (state) => state.customers.isCustomerLoggedIn
   );
   const navigate = useNavigate();
+
+  // Function to show password
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
   }
 
+  // Function to hide password
   function hidePassword() {
     setshowVisibility(false);
     setPasswordInputType("password");
   }
 
+  // Function to handle form submission
   function signinFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(customerSignin(customerObj));
   }
 
-  
+  // useEffect hook to handle redirection after successful login
   useEffect(() => {
     if (isCustomerLoggedIn) {
       navigate("/");
@@ -51,6 +58,7 @@ export default function CustomerLoginPage() {
         <div className="row">
           <div className="col-md-5  form-section">
             <form className="px-3 py-5 rounded-4 shadow">
+              {/* Render FormTabs component */}
               <FormTabs
                 link1={"/customer/login"}
                 link2={"/customer/register"}
@@ -64,6 +72,8 @@ export default function CustomerLoginPage() {
                 >
                   Email address
                 </label>
+
+                {/* Email input field */}
                 <input
                   type="email"
                   className="form-control"
@@ -86,6 +96,8 @@ export default function CustomerLoginPage() {
                   Password
                 </label>
                 <div class="input-group mb-3">
+
+                  {/* Password input field */}
                   <input
                     type={passwordInputType}
                     id="new-password"

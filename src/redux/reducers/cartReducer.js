@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+// Async action creator for adding a product to the cart
 export const addToCart = createAsyncThunk('cart/addToCartByID', async (productID) => {
 
-    const res = await fetch(`http://127.0.0.1:5100/api/cart/add/${productID}`, {
+    // Making a POST request to the server to add the product to the cart
+    await fetch(`https://epic-emporium-backend.onrender.com/api/cart/add/${productID}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -10,14 +12,13 @@ export const addToCart = createAsyncThunk('cart/addToCartByID', async (productID
         },
         body: JSON.stringify({}),
     })
-
-    const data = await res.json();
-    return data;
 },)
 
+// Async action creator for removing a product from the cart
 export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productID) => {
 
-    const res = await fetch(`http://127.0.0.1:5100/api/cart/delete/${productID}`, {
+    // Making a DELETE request to the server to remove the product from the cart
+    const res = await fetch(`https://epic-emporium-backend.onrender.com/api/cart/delete/${productID}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -25,15 +26,15 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (pro
         },
         body: JSON.stringify({}),
     })
-
     const data = await res.json();
-
     return data;
 },)
 
+// Async action creator for increasing the quantity of a product in the cart
 export const increaseQuantity = createAsyncThunk('cart/increaseQuantity', async (productID) => {
 
-    const res = await fetch(`http://127.0.0.1:5100/api/cart/increase/${productID}`, {
+    // Making a PUT request to the server to increase the quantity of the product in the cart
+    const res = await fetch(`https://epic-emporium-backend.onrender.com/api/cart/increase/${productID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -41,14 +42,16 @@ export const increaseQuantity = createAsyncThunk('cart/increaseQuantity', async 
         },
         body: JSON.stringify({}),
     })
-
     const data = await res.json();
     return data.data;
 },)
 
+
+// Async action creator for decreasing the quantity of a product in the cart
 export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async (productID) => {
 
-    const res = await fetch(`http://127.0.0.1:5100/api/cart/decrease/${productID}`, {
+    // Making a PUT request to the server to decrease the quantity of the product in the cart
+    const res = await fetch(`https://epic-emporium-backend.onrender.com/api/cart/decrease/${productID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -56,108 +59,57 @@ export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async 
         },
         body: JSON.stringify({}),
     })
-
     const data = await res.json();
-
     return data;
 },)
 
+// Async action creator for retrieving all products in the cart
 export const getAllCartProduct = createAsyncThunk('cart/getCartProduct', async () => {
 
-    const res = await fetch("http://127.0.0.1:5100/api/cart/all", {
+    // Making a GET request to the server to retrieve all products in the cart
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/cart/all", {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem("customerToken"),
         }
     });
-
     const data = await res.json();
-
     return data.data;
-
 },)
 
+// Initial state for the cart slice of the Redux store
 const initialState = {
-
-    cartArray: [],
-    addToCartPending: false,
-    getAllCartProductPending: false,
+    cartArray: [], // Array to hold the products in the cart
+    getAllCartProductPending: false, // Flag indicating if retrieving all products in the cart is pending
 }
 
+// Creating a slice of the Redux store for managing the cart state
 export const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
+    name: 'cart',  // Slice name
+    initialState, // Initial state
     reducers: {
-
-        resetNotification: (state, action) => {
-            state.message = "";
-        }
 
     }, extraReducers: (builder) => {
 
         builder
-            //ADD TO CART
-            .addCase(addToCart.fulfilled, (state, action) => {
-                console.log("FULFILLED")
-            })
-            .addCase(addToCart.pending, (state, action) => {
-                console.log("PENDING");
-            })
-            .addCase(addToCart.rejected, (state, action) => {
-                console.log("Rejected");
-            })
-
             //GET ALL CART PRODUCT ARRAY
             .addCase(getAllCartProduct.fulfilled, (state, action) => {
                 state.cartArray = action.payload;
                 state.getAllCartProductPending = false;
-                console.log("FULFILLED")
-            })
-            .addCase(getAllCartProduct.pending, (state, action) => {
-                state.getAllCartProductPending = true;
-                console.log("PENDING");
-            })
-            .addCase(getAllCartProduct.rejected, (state, action) => {
-                console.log("Rejected");
             })
             //REMOVE FROM CART
             .addCase(removeFromCart.fulfilled, (state, action) => {
                 state.cartArray = action.payload;
-                console.log("FULFILLED")
-            })
-            .addCase(removeFromCart.pending, (state, action) => {
-                console.log("PENDING");
-            })
-            .addCase(removeFromCart.rejected, (state, action) => {
-                console.log("Rejected");
             })
             //INCREASE QUANTITY
             .addCase(increaseQuantity.fulfilled, (state, action) => {
                 state.cartArray = action.payload;
-                console.log("FULFILLED")
             })
-            .addCase(increaseQuantity.pending, (state, action) => {
-                console.log("PENDING");
-            })
-            .addCase(increaseQuantity.rejected, (state, action) => {
-                console.log("Rejected");
-            })
-
             //DECREASE QUANTITY
             .addCase(decreaseQuantity.fulfilled, (state, action) => {
                 state.cartArray = action.payload;
-                console.log("FULFILLED")
-            })
-            .addCase(decreaseQuantity.pending, (state, action) => {
-                console.log("PENDING");
-            })
-            .addCase(decreaseQuantity.rejected, (state, action) => {
-                console.log("Rejected");
             })
     },
 })
-
-// Action creators are generated for each case reducer function
-export const { } = cartSlice.actions
 
 export default cartSlice.reducer

@@ -3,6 +3,7 @@ import Button from "../../components/button/Button";
 import { Link } from "react-router-dom";
 
 export default function CheckoutPage() {
+  // State for managing checkout status and form data
   const [checkout, setCheckout] = useState(false);
   const [checkoutObj, setCheckoutObj] = useState({
     fullname: "",
@@ -14,6 +15,7 @@ export default function CheckoutPage() {
     add: "",
   });
 
+  // Function to handle placing an order
   function placeOrder() {
     setCheckout((prev) => !prev);
     setCheckoutObj({
@@ -33,7 +35,10 @@ export default function CheckoutPage() {
           <div className="row d-flex justify-content-center">
             <div className="col-md-8  form-section">
               {!checkout ? (
-                <form className="px-3 py-5 rounded-4 shadow" onSubmit={placeOrder}>
+                <form
+                  className="px-3 py-5 rounded-4 shadow"
+                  onSubmit={placeOrder}
+                >
                   <h3 className="text-light text-center mb-3">Checkout Form</h3>
                   <div className="my-3">
                     <label
@@ -167,11 +172,7 @@ export default function CheckoutPage() {
                       required
                     ></textarea>
                   </div>
-                  <Button
-                  
-                    color={"primary"}
-                    text={"Place Order"}
-                  />
+                  <Button color={"primary"} text={"Place Order"} />
                 </form>
               ) : (
                 <div className="d-flex flex-column align-items-center">

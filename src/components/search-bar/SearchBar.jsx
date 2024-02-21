@@ -1,3 +1,4 @@
+//Importing the neccessary modules and components 
 import ProductList from "../product-List/ProductList";
 import {
   searchProducts,
@@ -6,7 +7,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
+//Component for rendering searchbar
 export default function SearchBar() {
+
+  //State varible to check which category is selected 
   const [categoryObj, setCategoryObj] = useState({
     menCat: false,
     womCat: false,
@@ -19,10 +23,12 @@ export default function SearchBar() {
 
   const dispatch = useDispatch();
   
+  //Getting the search result array from the store
   const searchResultArray = useSelector(
     (state) => state.products.searchResultArray
   );
 
+  //filtering the products array when category selection changes
   useEffect(() => {
     dispatch(filterByCategory(categoryObj));
   }, [

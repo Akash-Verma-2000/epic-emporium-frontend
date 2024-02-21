@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import { useState } from "react";
 import Button from "../../components/button/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,32 +7,42 @@ import MessageBar from "../../components/message-bar/MessageBar";
 import FormTabs from "../../components/form-tabs/FormTabs";
 import { vendorSignup } from "../../redux/reducers/vendorReducer";
 
+// Component for vendor register page
 export default function VendorRegisterPage() {
-  const [showVisibility, setshowVisibility] = useState(false);
-  const [passwordInputType, setPasswordInputType] = useState("password");
+  const [showVisibility, setshowVisibility] = useState(false); // State variable for showing password visibility
+  const [passwordInputType, setPasswordInputType] = useState("password"); // State variable for password input type
+
+  // State variable for vendor name, email, and password
   const [vendorObj, setVendorObj] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  // Selector for message from the redux store
   const message = useSelector((state) => state.vendors.message);
 
+  // useDispatch hook for dispatching actions
   const dispatch = useDispatch();
 
+  // Selector for checking if vendor signup is pending
   const vendorSignupPending = useSelector(
     (state) => state.vendors.vendorSignupPending
   );
 
+  // Function to show password
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
   }
 
+  // Function to hide password
   function hidePassword() {
     setshowVisibility(false);
     setPasswordInputType("password");
   }
 
+  // Function to handle vendor signup form submission
   function signupFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(vendorSignup(vendorObj));
@@ -136,11 +147,7 @@ export default function VendorRegisterPage() {
               </div>
 
               {!vendorSignupPending ? (
-                <Button
-               
-                  color={"primary"}
-                  text={"Register"}
-                />
+                <Button color={"primary"} text={"Register"} />
               ) : (
                 <LoadingButton />
               )}

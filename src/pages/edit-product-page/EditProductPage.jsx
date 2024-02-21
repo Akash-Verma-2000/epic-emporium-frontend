@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/button/Button";
 import { useState } from "react";
@@ -7,9 +8,11 @@ import LoadingButton from "../../components/button/LoadingButton";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditProductPage() {
-  const { _id } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { _id } = useParams(); // Get the ID parameter from the URL
+  const navigate = useNavigate(); // useNavigate hook for navigation
+  const dispatch = useDispatch(); // useDispatch hook for dispatching actions
+
+  // State variable using useState hook for product object
   const [productObj, setProductObj] = useState({
     title: "",
     price: "",
@@ -19,11 +22,13 @@ export default function EditProductPage() {
     ID: _id,
   });
 
+  // Redux hooks
   const message = useSelector((state) => state.vendorDashboard.message);
   const editProductPending = useSelector(
     (state) => state.vendorDashboard.editProductPending
   );
 
+  // Function to handle form submission for editing product
   function editProductSubmitHandler(e) {
     e.preventDefault();
     dispatch(editProduct(productObj));
@@ -55,6 +60,8 @@ export default function EditProductPage() {
                   <label htmlFor="title" className="form-label text-light">
                     Title
                   </label>
+
+                  {/* Title input field */}
                   <input
                     type="text"
                     className="form-control"
@@ -71,6 +78,7 @@ export default function EditProductPage() {
                   Price
                 </label>
                 <div className="input-group mb-3">
+                  {/* Price input field */}
                   <input
                     type="number"
                     className="form-control"
@@ -211,6 +219,7 @@ export default function EditProductPage() {
                   Product Image
                 </label>
                 <div className="input-group mb-3 ">
+                  {/* Input field for uploading product image */}
                   <input
                     type="file"
                     className="form-control"
@@ -227,6 +236,8 @@ export default function EditProductPage() {
                 <label htmlFor="desc" className="form-label text-light">
                   Description
                 </label>
+
+                {/* Textarea for product description */}
                 <textarea
                   id="desc"
                   className="form-control mb-3"

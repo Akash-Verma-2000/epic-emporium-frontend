@@ -1,3 +1,4 @@
+//Importing the neccessary modules and components
 import "./ProductCard.css";
 import Button from "../button/Button";
 import { Link } from "react-router-dom";
@@ -11,30 +12,43 @@ import UpdateButton from "../button/UpdateButton";
 import { getAllProducts } from "../../redux/reducers/productReducer";
 
 // Functional component for rendering product cards
-export default function ProductCard({ product , isCartPage=false}) {
+export default function ProductCard({ product, isCartPage = false }) {
+  // Initializing dispatch function
   const dispatch = useDispatch();
+
+  // Selecting cartArray from Redux store
   const cartArray = useSelector((state) => state.cart.cartArray);
+
+  //Flag to check if the product is present in the cart or not
   let isCartProduct = false;
+
+  // Selecting isCustomerLoggedIn state from Redux store
   const isCustomerLoggedIn = useSelector(
     (state) => state.customers.isCustomerLoggedIn
   );
 
+  // Selecting isVendorLoggedIn state from Redux store
   const isVendorLoggedIn = useSelector(
     (state) => state.vendors.isVendorLoggedIn
   );
+
+  // Function to handle adding product to cart
   function addToCartButtonHandler() {
     dispatch(addToCart(product._id));
     dispatch(getAllProducts());
   }
 
+  // Function to handle removing product from cart
   function removeFromCartButtonHandler() {
     dispatch(removeFromCart(product._id));
   }
 
+  // Function to handle deleting a product
   function deleteProductHandler() {
     dispatch(deleteProduct(product._id));
   }
 
+  // Function to check if product is present in cart
   function isPresentInCart() {
     isCartProduct = cartArray?.find((p) => p._id == product._id);
   }
@@ -57,7 +71,7 @@ export default function ProductCard({ product , isCartPage=false}) {
 
             {isCustomerLoggedIn ? (
               <>
-                {isCartProduct&&isCartPage ? (
+                {isCartProduct && isCartPage ? (
                   <div className="d-flex justify-content-around">
                     <DecreaseButton productID={product._id} />
                     <p className="fs-5 fw-semibold mt-2">{product.quantity}</p>

@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,35 +11,47 @@ import MessageBar from "../../components/message-bar/MessageBar";
 import LoadingButton from "../../components/button/LoadingButton";
 import FormTabs from "../../components/form-tabs/FormTabs";
 
+// Component for vendor forget password page
 export default function VendorForgetPassword() {
-  const [showVisibility, setshowVisibility] = useState(false);
-  const [passwordInputType, setPasswordInputType] = useState("password");
-  const [email, setEmail] = useState("");
-  const [otp, setOTP] = useState(0);
-  const [newPassword, setNewPassword] = useState("");
+  const [showVisibility, setshowVisibility] = useState(false); // State variable for showing password visibility
+  const [passwordInputType, setPasswordInputType] = useState("password"); // State variable for password input type
+  const [email, setEmail] = useState(""); // State variable for email input
+  const [otp, setOTP] = useState(0); // State variable for OTP input
+  const [newPassword, setNewPassword] = useState(""); // State variable for new password input
+
+  // Redux dispatcher
   const dispatch = useDispatch();
 
+  // Function to show password
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
   }
 
+  // Function to hide password
   function hidePassword() {
     setshowVisibility(false);
     setPasswordInputType("password");
   }
 
+  // Function to handle password reset form submission
   function resetPasswordFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(resetPassword({ newPassword }));
   }
 
+  // Selector for message
   const message = useSelector((state) => state.vendors.message);
+
+  // Selector for checking if OTP is being sent
   const sendOTPPending = useSelector((state) => state.vendors.sendOTPPending);
+
+  // Selector for checking if OTP verification is pending
   const OTPVerificationPending = useSelector(
     (state) => state.vendors.OTPVerificationPending
   );
 
+  // Selector for checking if password reset is pending
   const passwordResetPending = useSelector(
     (state) => state.vendors.passwordResetPending
   );
@@ -47,7 +60,6 @@ export default function VendorForgetPassword() {
     <>
       <div className="login-page">
         <div className="container">
-
           {message ? <MessageBar text={message} /> : null}
           <div className="row">
             <div className="col-md-5  form-section">

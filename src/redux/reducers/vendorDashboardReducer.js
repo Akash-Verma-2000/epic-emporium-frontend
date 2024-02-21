@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+// Async action creator for fetching vendor products
 export const getVendorProduct = createAsyncThunk('vendor/product', async () => {
-    const res = await fetch("http://127.0.0.1:5100/api/product", {
+
+    // Making a GET request to retrieve vendor products from the server
+    const res = await fetch("https://epic-emporium-backend.onrender.com/api/product", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -9,12 +12,14 @@ export const getVendorProduct = createAsyncThunk('vendor/product', async () => {
         }
     });
     const data = await res.json();
-
     return data.data;
 });
 
+// Async action creator for deleting a product
 export const deleteProduct = createAsyncThunk('vendor/delete-product', async (productID) => {
-    const res = await fetch(`http://127.0.0.1:5100/api/product/delete-product/${productID}`, {
+
+    // Making a DELETE request to delete a product from the server
+    const res = await fetch(`https://epic-emporium-backend.onrender.com/api/product/delete-product/${productID}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -22,11 +27,12 @@ export const deleteProduct = createAsyncThunk('vendor/delete-product', async (pr
         }
     });
     return await res.json();
-
 });
 
-
+// Async action creator for adding a new product
 export const addNewProduct = createAsyncThunk('vendor/add-new-product', async (productObj) => {
+
+    // Creating a form data object to send multipart/form-data
     const formData = new FormData();
     formData.append('title', productObj.title);
     formData.append('price', productObj.price);
@@ -34,20 +40,21 @@ export const addNewProduct = createAsyncThunk('vendor/add-new-product', async (p
     formData.append('category', productObj.category);
     formData.append('image', productObj.image);
 
-    const res = await fetch(`http://127.0.0.1:5100/api/product/add-product`, {
+    // Making a POST request to add a new product to the server
+    const res = await fetch(`https://epic-emporium-backend.onrender.com/api/product/add-product`, {
         method: 'POST',
         headers: {
             'Authorization': localStorage.getItem("vendorToken"),
         },
         body: formData,
     });
-
     return await res.json();
-
 });
 
+// Async action creator for editing a product
 export const editProduct = createAsyncThunk('vendor/edit-product', async (productObj) => {
 
+    // Creating a form data object to send multipart/form-data
     const formData = new FormData();
     formData.append('title', productObj.title);
     formData.append('price', productObj.price);
@@ -55,40 +62,38 @@ export const editProduct = createAsyncThunk('vendor/edit-product', async (produc
     formData.append('category', productObj.category);
     formData.append('image', productObj.image);
 
-    const res = await fetch(`http://127.0.0.1:5100/api/product/update-product/${productObj.ID}`, {
+    // Making a PUT request to update a product on the server
+    const res = await fetch(`https://epic-emporium-backend.onrender.com/api/product/update-product/${productObj.ID}`, {
         method: 'PUT',
         headers: {
             'Authorization': localStorage.getItem("vendorToken"),
         },
         body: formData,
     });
-
     const data = await res.json();
-
     return data.message;
-
 });
 
-
-
-
+// Initial state for the vendor dashboard slice of the Redux store
 const initialState = {
-    message: "",
-    vedorProductArray: [],
-    vedorProductPending: false,
-    addNewProductPending: false,
-    editProductPending: false,
+    message: "", // Notification message
+    vedorProductArray: [],  // Array to hold vendor products
+    vedorProductPending: false, // Flag indicating if fetching vendor products is pending
+    addNewProductPending: false, // Flag indicating if adding a new product is pending
+    editProductPending: false, // Flag indicating if editing a product is pending
 }
 
-// Then, handle actions in your reducers:
+// Creating a slice of the Redux store for managing the vendor dashboard state
 const vendorDashboardSlice = createSlice({
-    name: 'vendorDashboard',
-    initialState,
+    name: 'vendorDashboard', // Slice name
+    initialState,  // Initial state
+
     reducers: {
+
+        // Action for resetting vendor dashboard notification
         resetVendorDashboardNotification: (state, action) => {
             state.message = "";
         }
-
     },
 
     extraReducers: (builder) => {
@@ -102,15 +107,10 @@ const vendorDashboardSlice = createSlice({
             .addCase(getVendorProduct.pending, (state, action) => {
                 state.vedorProductPending = true;
             })
-            .addCase(getVendorProduct.rejected, (state, action) => {
-                console.log("Rejected");
-            })
             //DELETE PRODUCT
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 state.vedorProductArray = action.payload.restProducts;
                 state.message = action.payload.message;
-            })
-            .addCase(deleteProduct.pending, (state, action) => {
             })
             .addCase(deleteProduct.rejected, (state, action) => {
                 state.message = action.payload.message;
@@ -130,15 +130,12 @@ const vendorDashboardSlice = createSlice({
             .addCase(editProduct.fulfilled, (state, action) => {
                 state.editProductPending = false;
                 state.message = action.payload;
-                console.log("Fulfilled");
             })
             .addCase(editProduct.pending, (state, action) => {
                 state.editProductPending = true;
-                console.log("pending");
             })
             .addCase(editProduct.rejected, (state, action) => {
                 state.message = action.payload;
-                console.log("Rejected");
             })
 
     },
@@ -146,6 +143,6 @@ const vendorDashboardSlice = createSlice({
 
 })
 
-export const { resetVendorDashboardNotification  } = vendorDashboardSlice.actions;
+export const { resetVendorDashboardNotification } = vendorDashboardSlice.actions;
 
 export default vendorDashboardSlice.reducer

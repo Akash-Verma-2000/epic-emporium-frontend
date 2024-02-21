@@ -1,3 +1,4 @@
+// Importing all the necessary modules and components
 import { useState } from "react";
 import Button from "../../components/button/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,10 @@ import LoadingButton from "../../components/button/LoadingButton";
 import MessageBar from "../../components/message-bar/MessageBar";
 
 export default function AddProductPage() {
+  // Redux hooks for dispatching actions and accessing state
   const dispatch = useDispatch();
+
+  // State to manage form data for adding a new product
   const [productObj, setProductObj] = useState({
     title: "",
     price: "",
@@ -20,6 +24,7 @@ export default function AddProductPage() {
   );
   const message = useSelector((state) => state.vendorDashboard.message);
 
+  // Function to handle form submission for adding a new product
   function addNewProductSubmitHandler(e) {
     e.preventDefault();
     dispatch(addNewProduct(productObj));
@@ -29,13 +34,14 @@ export default function AddProductPage() {
       description: "",
       category: "",
       image: "",
-    })
+    });
   }
 
   return (
     <>
       <div className="login-page">
         <div className="container">
+          {/* Displaying a message bar if there is any message */}
           {message ? <MessageBar text={message} /> : null}
 
           <div className="row ">
@@ -51,6 +57,7 @@ export default function AddProductPage() {
                   <label htmlFor="title" className="form-label text-light">
                     Title
                   </label>
+                  {/* Input field for product title */}
                   <input
                     type="text"
                     className="form-control"
@@ -67,6 +74,7 @@ export default function AddProductPage() {
                   Price
                 </label>
                 <div className="input-group mb-3">
+                  {/* Input field for product price */}
                   <input
                     type="number"
                     className="form-control"
@@ -77,6 +85,8 @@ export default function AddProductPage() {
                     }}
                     required
                   />
+
+                  {/* Dropdown menu for selecting product category */}
                   <button
                     className="btn bg-primary text-light dropdown-toggle"
                     type="button"
@@ -96,7 +106,6 @@ export default function AddProductPage() {
                         onChange={() =>
                           setProductObj({ ...productObj, category: "men" })
                         }
-                       
                       />
                       <label
                         className="form-check-label"
@@ -115,7 +124,6 @@ export default function AddProductPage() {
                         onChange={() =>
                           setProductObj({ ...productObj, category: "woman" })
                         }
-                      
                       />
                       <label
                         className="form-check-label"
@@ -134,7 +142,6 @@ export default function AddProductPage() {
                         onChange={() =>
                           setProductObj({ ...productObj, category: "kids" })
                         }
-                       
                       />
                       <label
                         className="form-check-label"
@@ -153,7 +160,6 @@ export default function AddProductPage() {
                         onChange={() =>
                           setProductObj({ ...productObj, category: "jewelery" })
                         }
-                       
                       />
                       <label
                         className="form-check-label"
@@ -175,7 +181,6 @@ export default function AddProductPage() {
                             category: "electronics",
                           })
                         }
-                      
                       />
                       <label
                         className="form-check-label"
@@ -197,7 +202,6 @@ export default function AddProductPage() {
                             category: "accessories",
                           })
                         }
-                      
                       />
                       <label
                         className="form-check-label"
@@ -213,6 +217,7 @@ export default function AddProductPage() {
                   Product Image
                 </label>
                 <div className="input-group mb-3 ">
+                  {/* Input field for product image */}
                   <input
                     type="file"
                     className="form-control"
@@ -229,6 +234,7 @@ export default function AddProductPage() {
                 <label htmlFor="desc" className="form-label text-light">
                   Description
                 </label>
+                {/* Textarea for product description */}
                 <textarea
                   id="desc"
                   className="form-control mb-3"
@@ -242,10 +248,7 @@ export default function AddProductPage() {
                   required
                 ></textarea>
                 {!addNewProductPending ? (
-                  <Button
-                    text={"Add Product"}
-                    color={"primary"}
-                  />
+                  <Button text={"Add Product"} color={"primary"} />
                 ) : (
                   <LoadingButton />
                 )}

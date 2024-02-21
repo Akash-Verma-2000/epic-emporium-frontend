@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import { useState } from "react";
 import "./CustomerRegisterPage.css";
 import Button from "../../components/button/Button";
@@ -8,6 +9,7 @@ import MessageBar from "../../components/message-bar/MessageBar";
 import FormTabs from "../../components/form-tabs/FormTabs";
 
 export default function CustomerRegisterPage() {
+  // State variables using useState hook
   const [showVisibility, setshowVisibility] = useState(false);
   const [passwordInputType, setPasswordInputType] = useState("password");
   const [customerObj, setCustomerObj] = useState({
@@ -18,21 +20,25 @@ export default function CustomerRegisterPage() {
 
   const dispatch = useDispatch();
 
+  // Function to show password
   function showPassword() {
     setshowVisibility(true);
     setPasswordInputType("text");
   }
 
+  // Function to hide password
   function hidePassword() {
     setshowVisibility(false);
     setPasswordInputType("password");
   }
 
+  // Function to handle form submission
   function signupFormSubmitHandler(e) {
     e.preventDefault();
     dispatch(customerSignup(customerObj));
   }
 
+  // Redux hooks
   const message = useSelector((state) => state.customers.message);
   const customerSignupPending = useSelector(
     (state) => state.customers.customerSignupPending
@@ -45,7 +51,11 @@ export default function CustomerRegisterPage() {
 
         <div className="row">
           <div className="col-md-5  form-section">
-            <form className="px-3 py-5 rounded-4 shadow"  onSubmit={signupFormSubmitHandler}>
+            <form
+              className="px-3 py-5 rounded-4 shadow"
+              onSubmit={signupFormSubmitHandler}
+            >
+              {/* Render FormTabs component */}
               <FormTabs
                 link1={"/customer/login"}
                 link2={"/customer/register"}
@@ -59,6 +69,8 @@ export default function CustomerRegisterPage() {
                 >
                   Name
                 </label>
+
+                {/* Name input field */}
                 <input
                   name="name"
                   type="text"
@@ -77,6 +89,8 @@ export default function CustomerRegisterPage() {
                 >
                   Email address
                 </label>
+
+                {/* Email input field */}
                 <input
                   name="email"
                   type="email"
@@ -97,6 +111,7 @@ export default function CustomerRegisterPage() {
                 Password
               </label>
               <div className="input-group mb-3">
+                {/* Password input field */}
                 <input
                   type={passwordInputType}
                   id="new-password"
@@ -133,11 +148,7 @@ export default function CustomerRegisterPage() {
               </div>
 
               {!customerSignupPending ? (
-                <Button
-                 
-                  color={"primary"}
-                  text={"Register"}
-                />
+                <Button color={"primary"} text={"Register"} />
               ) : (
                 <LoadingButton />
               )}

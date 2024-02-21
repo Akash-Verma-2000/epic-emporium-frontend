@@ -1,6 +1,8 @@
+//Imporing all the necessary modules and components
+
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
 import NavBar from "./components/nav-bar/NavBar";
 import HomePage from "./pages/home-page/HomePage";
@@ -19,10 +21,10 @@ import EditProductPage from "./pages/edit-product-page/EditProductPage";
 import SelectedCategoryPage from "./pages/selected-category-page/SelectedCategoryPage";
 import Footer from "./components/footer/Footer";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
-import { getAllCartProduct } from "./redux/reducers/cartReducer";
 
 export default function App() {
- 
+
+  //Route configuration of the application
   const browserRouter = createBrowserRouter([
 
     {
@@ -95,11 +97,11 @@ export default function App() {
   )
 
   return <>
+    {/* Providing the Redux store to the application */}
     <Provider store={store}>
-
+      {/* Providing the BrowserRouter instance to the application */}
       <RouterProvider router={browserRouter} />
       <Footer />
-
     </Provider>
   </>
 }

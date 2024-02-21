@@ -1,7 +1,9 @@
+// Import necessary modules and styles
 import "./FormTabs.css";
 import { NavLink } from "react-router-dom";
 
-export default function FormTabs({link1, link2, link3}) {
+// Component for rendering form tabs with navigation links
+export default function FormTabs({ link1, link2, link3 }) {
   return (
     <>
       <ul className="nav nav-tabs border-primary mb-5">

@@ -1,9 +1,10 @@
+//Importing the necessary modules and components
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../product-card/ProductCard";
 import { getAllCartProduct } from "../../redux/reducers/cartReducer";
-import { useState } from "react";
 import MessageBar from "../message-bar/MessageBar";
 
+//Component for rendering the list of the products 
 export default function ProductList({ ProductArray ,isCartPage=false}) {
   const dispatch = useDispatch();
   dispatch(getAllCartProduct);

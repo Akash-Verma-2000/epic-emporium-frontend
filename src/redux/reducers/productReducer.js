@@ -1,58 +1,60 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+// Async action creator for fetching all products
 export const getAllProducts = createAsyncThunk('products/fetchAllProducts', async () => {
 
-  const res = await fetch("http://127.0.0.1:5100/api/product/all");
+  // Making a GET request to retrieve all products from the server
+  const res = await fetch("https://epic-emporium-backend.onrender.com/api/product/all");
   const data = await res.json();
   return data.data;
-
 },)
 
-
+// Async action creator for fetching a product by ID
 export const getProductByID = createAsyncThunk('products/fetchProductByID', async (productID) => {
 
-  const res = await fetch(`http://127.0.0.1:5100/api/product/${productID}`);
+  // Making a GET request to retrieve a product by ID from the server
+  const res = await fetch(`https://epic-emporium-backend.onrender.com/api/product/${productID}`);
   const data = await res.json();
   return data.data;
-
 },)
 
+// Async action creator for fetching products by category
 export const getProductByCategory = createAsyncThunk('products/fetchProductByCategory', async (category) => {
 
-  const res = await fetch(`http://127.0.0.1:5100/api/product/category/${category}`);
+  // Making a GET request to retrieve products by category from the server
+  const res = await fetch(`https://epic-emporium-backend.onrender.com/api/product/category/${category}`);
   const data = await res.json();
   return data.data;
-
 },)
 
+// Initial state for the product slice of the Redux store
 const initialState = {
 
-
-  singleProductDetails: {},
-  singleProductDetailsPending: false,
-  productsArrayPending: false,
-  specificCategoryArrayPending: false,
-  productsArray: [],
-  filteredProductArray: [],
-  searchResultArray: [],
-  specificCategoryArray: [],
-
+  singleProductDetails: {}, // Details of a single product
+  singleProductDetailsPending: false,  // Flag indicating if fetching details of a single product is pending
+  productsArrayPending: false, // Flag indicating if fetching all products is pending
+  specificCategoryArrayPending: false, // Flag indicating if fetching products by category is pending
+  productsArray: [],  // Array to hold all products
+  filteredProductArray: [],  // Array to hold filtered products
+  searchResultArray: [],  // Array to hold search results
+  specificCategoryArray: [], // Array to hold products of a specific category
 
 }
 
 // Then, handle actions in your reducers:
 const productSlice = createSlice({
-  name: 'products',
-  initialState,
+  name: 'products', // Slice name
+  initialState, // Initial state
+
   reducers: {
 
+    // Action for searching products
     searchProducts: (state, action) => {
 
       let inputValue = action.payload.toUpperCase();
       if (!inputValue) {
         state.searchResultArray = [];
       } else {
-
         const temp = state.productsArray.filter((product) => {
           let productName = product.title.toUpperCase();
           return productName.indexOf(inputValue) == 0;
@@ -61,13 +63,13 @@ const productSlice = createSlice({
       }
     },
 
-
+    // Action for filtering products by category
     filterByCategory: (state, action) => {
 
       const { accCat, othCat, menCat, womCat, jelCat, eleCat, maxPrice } = action.payload;
-
       state.filteredProductArray = state.productsArray;
 
+      // Filtering products based on selected categories
       let accessory = [];
       if (accCat) {
         accessory = state.filteredProductArray.filter((product) => product.category == "accessories" && product.price <= maxPrice);
@@ -113,44 +115,27 @@ const productSlice = createSlice({
         state.productsArray = action.payload;
         state.filteredProductArray = action.payload;
         state.productsArrayPending = false;
-        console.log("FULFILLED")
       })
       .addCase(getAllProducts.pending, (state, action) => {
         state.productsArrayPending = true;
-        console.log("PENDING");
-      })
-      .addCase(getAllProducts.rejected, (state, action) => {
-        console.log("Rejected");
       })
       //getProductByID 
       .addCase(getProductByID.fulfilled, (state, action) => {
         state.singleProductDetails = action.payload;
         state.singleProductDetailsPending = false;
-        console.log("FULFILLED");
       })
       .addCase(getProductByID.pending, (state, action) => {
         state.singleProductDetailsPending = true;
-        console.log("PENDING");
-      })
-      .addCase(getProductByID.rejected, (state, action) => {
-        console.log("REJECTED");
       })
       //GET PRODUCT BY CATEGORY
       .addCase(getProductByCategory.fulfilled, (state, action) => {
         state.specificCategoryArray = action.payload;
         state.specificCategoryArrayPending = false;
-        console.log("FULFILLED");
       })
       .addCase(getProductByCategory.pending, (state, action) => {
         state.specificCategoryArrayPending = true;
-        console.log("PENDING")
-      })
-      .addCase(getProductByCategory.rejected, (state, action) => {
-        console.log("REJECTED")
       })
   },
-
-
 })
 
 export const { searchProducts, filterByCategory, specificCategoryArray, specificCategoryArrayPending } = productSlice.actions;
