@@ -1,70 +1,168 @@
-# Getting Started with Create React App
+# Epic Emporium
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Our React.js E-Commerce Platform offers a streamlined shopping experience for both customers and vendors. With intuitive interfaces, secure authentication, and efficient product management powered by Redux Toolkit, I've simplified online commerce. Whether you're browsing products or managing inventory, our platform provides a seamless solution for your e-commerce needs.
 
-## Available Scripts
+## Technologies Used
 
-In the project directory, you can run:
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Steps to Setup
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Clone the repository **`git clone <URL>`**
+2. Install dependencies **`npm install`**
+3. Run the server from the index.js file **`npm start`**
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- ### User
 
-### `npm run build`
+  - #### Customer:
+    - Customer Registration.
+    - Customer Login.
+    - Sending OTP for password reset.
+    - Verifying the OTP.
+    - Reseting the password.
+  - #### Customer:
+    - Vendor Registration.
+    - Vendor Login.
+    - Sending OTP for password reset.
+    - Verifying the OTP.
+    - Reseting the password.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ### Products
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  - Fetch all products.
+  - Fetch single product details.
+  - Fetch products by category.
+  - Fetch products of logged in vendor.
+  - Add product.
+  - Delete product.
+  - Update product.
+  - Filter products by price and category.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- ### Cart
 
-### `npm run eject`
+  - Add to cart
+  - Remove from cart
+  - Increase quantity
+  - Decrease quantity
+  - Fetch all cart products
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- ### Checkout
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - Place orders
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+- **`public`**: All the public files are here.
+- **`src`**: 
+    - **`components`**
+        - **`button`**
+            - **`Button.css`**
+            - **`Button.jsx`**
+            - **`DecreaseButton.jsx`**
+            - **`IncreaseButton.jsx`**
+            - **`LoadingButton.jsx`**
+            - **`UpdateButton.jsx`**
+        - **`Carousel`** 
+            - **`Carousel.css`**
+            - **`Carousel.jsx`**
+        - **`category-section`**
+            - **`CategoryBlock.css`**
+            - **`CategoryBlock.jsx`**
+        - **`footer`**
+            - **`Footer.jsx`**
+        - **`form-tabs`**
+            - **`FormTabs.css`**
+            - **`FormTabs.jsx`**
+        - **`Loading-animation`**
+            - **`LoadingPageAnimation.jsx`**
+        - **`message-bar`**
+            - **`MessageBar.css`**
+            - **`MessageBar.jsx`**
+        - **`nav-bar`**
+            - **`NavBar.css`**
+            - **`NavBar.jsx`**
+        - **`product-card`**
+            - **`ProductCard.css`**
+            - **`ProductCard.jsx`**
+        - **`product-List`**
+            - **`ProductList.jsx`**
+        - **`search-bar`**
+            - **`SearchBar.jsx`**
+    - **`images`**
+    - **`pages`**
+        - **`add-product-page`**
+            - **`AddProductPage.jsx`**
+        - **`cart-page`**
+            - **`CartPage.css`**
+            - **`CartPage.jsx`**
+        - **`checkout-page`**
+            - **`CheckoutPage.jsx`**
+        - **`customer-forget-password`**
+            - **`CustomerForgetPassword.jsx`**
+        - **`customer-login-page`**
+            - **`CustomerLoginPage.jsx`**
+        - **`customer-register-page`**
+            - **`CustomerRegisterPage.css`**
+            - **`CustomerRegisterPage.jsx`**
+        - **`edit-product-page`**
+            - **`EditProductPage.css`**
+            - **`EditProductPage.jsx`**
+        - **`home-page`**
+            - **`HomePage.css`**
+            - **`HomePage.jsx`**
+        - **`product-details-page`**
+            - **`ProductDetailsPage.css`**
+            - **`ProductDetailsPage.jsx`**
+        - **`selected-category-page`**
+            - **`SelectedCategoryPage.css`**
+            - **`SelectedCategoryPage.jsx`**
+        - **`shop-page`**
+            - **`ShopPage.css`**
+            - **`ShopPage.jsx`**
+        - **`vendor-dashboard`**
+            - **`VendorDashboard.css`**
+            - **`VendorDashboard.jsx`**
+        - **`vendor-forget-password`**
+            - **`VendorForgetPassword.jsx`**
+        - **`vendor-login-page`**
+            - **`VendorLoginPage.jsx`**
+        - **`vendor-register-page`**
+            - **`VendorRegisterPage.jsx`**
+    - **`redux`**
+        - **`reducers`**
+            - **`cartReducer.js`**
+            - **`customerReducer.js`**
+            - **`productReducer.js`**
+            - **`vendorDashboardReducer.js`**
+            - **`vendorReducer.js`**
+        - **`store`**
+            - **`store.js`**
+    - **`App.js`**
+    - **`index.css`**
+    - **`index.js`**
+- **`gitignore`**
+- **`package-lock.json`**
+- **`package.json`**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Author
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Akash Verma
 
-### Code Splitting
+## Contact me
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akash-verma-09aug2000/) [![LeetCode](https://img.shields.io/badge/-LeetCode-FFA116?style=for-the-badge&logo=LeetCode&logoColor=black)](https://leetcode.com/Akash_Verma2000/) [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:akash.verma217112@gmail.com)
+[![Naukari](https://img.shields.io/badge/Naukri.com-0A66C2?style=for-the-badge&logo=Naukri.com&logoColor=white)](https://www.naukri.com/mnjuser/profile)
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the ISC License.
